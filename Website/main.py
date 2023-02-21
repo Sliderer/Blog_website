@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, redirect, url_for, render_template
+from flask import Flask, Blueprint, redirect, url_for, render_template, request
 from flask_login import login_required
 from secret_key_generator import SecretKeyGenerator
 
@@ -20,14 +20,21 @@ def log_int_user():
     return redirect('/login')
 
 
-@app.route('/registration')
+@app.route('/registration', methods=['GET', 'POST'])
 def register():
-    return render_template('registration.html', links=['/logout', '/registration', '/registration'])
+    if request.method == 'GET':
+        return render_template('registration.html', links=['/logout', '/registration', '/registration'])
+    else:
+        return redirect('/registration')
 
 
-@app.route('/enter')
+@app.route('/enter', methods=['GET', 'POST'])
 def enter():
-    return render_template('enter.html', links=['/logout', '/enter', '/enter'])
+    if request.method == 'GET':
+        return render_template('enter.html', links=['/logout', '/enter', '/enter'])
+    else:
+        # print(request.form.get('email'))
+        return redirect('/enter')
 
 
 if __name__ == '__main__':
