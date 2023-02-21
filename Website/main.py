@@ -12,6 +12,7 @@ def log_out_user():
     return redirect('/logout')
 
 if __name__ == '__main__':
+    print('hello')
     secret_key = SecretKeyGenerator.generate_secret_code()
     app.secret_key = secret_key
     app.run(debug=True)
