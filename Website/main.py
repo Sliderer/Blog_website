@@ -6,8 +6,11 @@ from log_out import log_out
 from log_in import log_in
 
 from models import UserLogin
+from database import Database
 
 app = Flask(__name__)
+
+database = Database()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -18,8 +21,7 @@ app.register_blueprint(log_in, url_prefix='/login')
 
 @login_manager.user_loader
 def load_user(user_id):
-    print("Load user")
-    return UserLogin('a6271547@mail.ru', 123)
+    return database.find_user_by_id(user_id)
 
 
 @app.route('/')
@@ -49,9 +51,14 @@ def register():
             flash('Your password is too short')
             return redirect('/registration')
 
-        user = UserLogin(name, password)
-        login_user(user)
-        return redirect('/login')
+        temp_user = UserLogin().init_for_registration(name, password, email)
+        user = database.add_user(temp_user)
+        print('USER NAME ' + user.name)
+        if user:
+            login_user(user)
+            return redirect('/login')
+        else:
+            return redirect(url_for('register'))
 
 
 @app.route('/enter', methods=['GET', 'POST'])
@@ -59,10 +66,14 @@ def enter():
     if request.method == 'GET':
         return render_template('enter.html', links=['/logout', '/enter', '/enter'])
     else:
-        # print(request.form.get('email'))
-        user = UserLogin(request.form.get('email'), 123)
-        login_user(user)
-        return redirect('/login')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = database.find_user_by_email(email)
+        if user and user.password == password:
+            login_user(user)
+            return redirect('/login')
+        else:
+            return redirect(url_for('enter'))
 
 
 if __name__ == '__main__':
