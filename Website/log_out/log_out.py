@@ -5,4 +5,5 @@ log_out = Blueprint('log_out_user', __name__, template_folder='templates', stati
 
 @log_out.route('/')
 def home_page():
-    return render_template('home_page.html', links=['/', '/registration', '/registration'])
+    print('logout')
+    return render_template('logout_home_page.html', links=['/', '/registration', '/registration'])

@@ -13,6 +13,11 @@
 <form class="center_location text-center" method="post">
 
     <h1 class="h3 mb-3 fw-normal">Please register</h1>
+
+    {% for message in get_flashed_messages() %}
+    <p class="warning_text">{{ message }} </p>
+    {% endfor %}
+
     <div class="form-floating">
       <input type="text" name="name" class="form-control fields_padding" id="floatingName" placeholder="Andrey">
       <label for="floatingName">Your name</label>
