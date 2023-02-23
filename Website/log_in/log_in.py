@@ -5,6 +5,7 @@ log_in = Blueprint('login', __name__, template_folder='templates', static_folder
 
 
 @log_in.route('/')
+@login_required
 def account():
     print('login')
     return render_template('login_home_page.html', links=[
