@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, redirect, url_for, render_template, request, flash
 from flask_login import login_required, LoginManager, login_user
 from secret_key_generator import SecretKeyGenerator
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from log_out import log_out
 from log_in import log_in
@@ -51,9 +52,10 @@ def register():
             flash('Your password is too short')
             return redirect('/registration')
 
+        password = generate_password_hash(password)
         temp_user = UserLogin().init_for_registration(name, password, email)
         user = database.add_user(temp_user)
-        print('USER NAME ' + user.name)
+
         if user:
             login_user(user)
             return redirect('/login')
@@ -69,7 +71,7 @@ def enter():
         email = request.form.get('email')
         password = request.form.get('password')
         user = database.find_user_by_email(email)
-        if user and user.password == password:
+        if user and check_password_hash(user.password, password):
             login_user(user)
             return redirect('/login')
         else:

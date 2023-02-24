@@ -1,0 +1,12 @@
+{% extends 'base_for_all_template.html' %}
+
+{% block extra_buttons%}
+<li><a href="/account" class="nav-link px-2 link-dark">Account</a></li>
+{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Name: {{ current_user.name }}</h1>
+    <h1>Email: {{ current_user.email }}</h1>
+</div>
+{% endblock %}

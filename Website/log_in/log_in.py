@@ -6,13 +6,15 @@ from models import UserLogin
 log_in = Blueprint('login', __name__, template_folder='templates', static_folder='static')
 
 
+
 @log_in.route('/')
 @login_required
 def login_home():
-    user = UserLogin().init_from_tuple(current_user)
+    username = current_user.get_name()
+    print(username)
     return render_template('login_home_page.html', links=[
-        url_for('.login_home') + '/', url_for('.login_home') + 'blogs', url_for('.login_home') + 'my_blogs'
-    ], user_id=user.name)
+    url_for('.login_home') + '/', url_for('.login_home') + 'blogs', url_for('.login_home') + 'my_blogs'],
+                           user_name=username)
 
 
 @log_in.route('/blogs')
@@ -24,3 +26,10 @@ def blogs():
 @log_in.route('/my_blogs')
 def user_blogs():
     return 'My blogs'
+
+
+@log_in.route('/account')
+def account():
+    return render_template('account.html',
+                           links=[url_for('.login_home') + '/', url_for('.login_home') + 'blogs', url_for('.login_home') + 'my_blogs'],
+                           current_user=current_user)
