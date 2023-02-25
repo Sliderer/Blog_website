@@ -1,0 +1,16 @@
+{% extends 'login_base.html' %}
+
+{% block body %}
+<form action="" method="post">
+    <button class="btn btn-lg btn-primary" name="foo" value="upvote">Add blog</button>
+</form>
+
+<div>
+    <h1>Your blogs</h1>
+</div>
+<div>
+    {% for blog in blogs %}
+    <p>{{ blog.title}}</p>
+    {% endfor %}
+</div>
+{% endblock %}

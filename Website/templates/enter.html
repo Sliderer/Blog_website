@@ -14,6 +14,10 @@
 
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
+    {% for message in get_flashed_messages() %}
+    <p class="warning_text">{{ message }} </p>
+    {% endfor %}
+
     <div class="form-floating">
       <input type="email" name="email" class="form-control fields_padding" id="floatingInput" placeholder="name@example.com">
       <label for="floatingInput">Email address</label>

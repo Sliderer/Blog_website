@@ -1,5 +1,5 @@
 import sqlite3
-from models import UserLogin
+from models import UserLogin, Blog
 
 
 class Database:
@@ -16,12 +16,22 @@ class Database:
     def add_user(self, user: UserLogin) -> UserLogin:
         command = f"INSERT INTO users VALUES (NULL, '{user.name}', '{user.password}', '{user.email}') RETURNING *"
         return_result = self.__execute_command(command)[0]
+        if not return_result:
+            return None
+        else:
+            return_result = return_result[0]
+
         result_user = UserLogin().init_from_tuple(return_result)
         return result_user
 
     def __find_user(self, criteria: str, value: str) -> UserLogin:
         command = f"SELECT * FROM users WHERE {criteria}={value}"
-        return_result = self.__execute_command(command)[0]
+        return_result = self.__execute_command(command)
+        if not return_result:
+            return None
+        else:
+            return_result = return_result[0]
+
         result_user = UserLogin().init_from_tuple(return_result)
         return result_user
 
@@ -30,4 +40,12 @@ class Database:
 
     def find_user_by_email(self, email) -> UserLogin:
         return self.__find_user('email', f"'{email}'")
+
+
+    def get_user_blogs(self, user: UserLogin):
+        command = f"SELECT * FROM blogs WHERE user_id='{user.id}'"
+        blogs = self.__execute_command(command)
+        blogs = [Blog().init_from_tuple(data) for data in blogs]
+        return blogs
+
 

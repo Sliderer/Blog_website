@@ -7,11 +7,9 @@ from log_out import log_out
 from log_in import log_in
 
 from models import UserLogin
-from database import Database
+from config import database
 
 app = Flask(__name__)
-
-database = Database()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -71,10 +69,16 @@ def enter():
         email = request.form.get('email')
         password = request.form.get('password')
         user = database.find_user_by_email(email)
-        if user and check_password_hash(user.password, password):
+
+        if not user:
+            flash('Unknown email')
+            return redirect(url_for('enter'))
+
+        if check_password_hash(user.password, password):
             login_user(user)
             return redirect('/login')
         else:
+            flash('Wrong password')
             return redirect(url_for('enter'))
 
 

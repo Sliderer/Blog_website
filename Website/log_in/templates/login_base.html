@@ -1,0 +1,9 @@
+
+{% set links= [url_for('.login_home') + '/', url_for('.login_home') + 'blogs', url_for('.login_home') + 'my_blogs'] %}
+
+{% extends 'base_for_all_template.html' %}
+
+{% block extra_buttons%}
+<p>{{title}}</p>
+<li><a href="/login/account" class="nav-link px-2 link-dark">Account</a></li>
+{% endblock %}
