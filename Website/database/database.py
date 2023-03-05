@@ -41,11 +41,14 @@ class Database:
     def find_user_by_email(self, email) -> UserLogin:
         return self.__find_user('email', f"'{email}'")
 
-
     def get_user_blogs(self, user: UserLogin):
         command = f"SELECT * FROM blogs WHERE user_id='{user.id}'"
         blogs = self.__execute_command(command)
         blogs = [Blog().init_from_tuple(data) for data in blogs]
         return blogs
+
+    def add_user_blog(self, used_id: int, blog: Blog):
+        command = f"INSERT INTO blogs VALUES (NULL, {used_id}, '{blog.title}', '{blog.text}')"
+        self.__execute_command(command)
 
 

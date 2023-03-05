@@ -3,6 +3,10 @@
 
 {% extends 'base_for_all_template.html' %}
 
+{% block head %}
+<link href="static/style.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block extra_buttons%}
 <p>{{title}}</p>
 <li><a href="/login/account" class="nav-link px-2 link-dark">Account</a></li>

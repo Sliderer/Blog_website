@@ -1,0 +1,24 @@
+.div_with_padding{
+    padding: 10px;
+}
+
+.center_location{
+    margin-left: auto;
+    margin-right: auto;
+    width: 20em;
+}
+
+.fields_padding{
+    padding: 5px;
+    margin: 5px;
+}
+
+.warning_text{
+    color: #d45959;
+}
+
+.textarea{
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}

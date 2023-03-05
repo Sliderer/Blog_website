@@ -11,3 +11,8 @@ class Blog:
         self.title = data[2]
         self.text = data[3]
         return self
+
+    def init_form_creation(self, title: str, text: str):
+        self.title = title
+        self.text = text
+        return self
