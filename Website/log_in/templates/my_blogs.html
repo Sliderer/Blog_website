@@ -6,11 +6,12 @@
 </form>
 
 <div class="div_with_padding">
-    <h1>Your blogs</h1>
-</div>
-<div class="div_with_padding">
     {% for blog in blogs %}
-    <p>{{ blog.title}}</p>
+    <div class="blog_panel">
+        <h1>{{ blog.title}}</h1>
+        <p>{{ blog.text}}</p>
+    </div>
+
     {% endfor %}
 </div>
 {% endblock %}

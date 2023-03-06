@@ -1,7 +1,7 @@
 {% extends 'login_base.html' %}
 
 {% block body %}
-<div class="div_with_padding">
+<div>
     <form class="center_location text-center" method="post">
 
         <h1 class="h3 mb-3 fw-normal">Create your blog!</h1>
@@ -10,16 +10,17 @@
         <p class="warning_text">{{ message }} </p>
         {% endfor %}
 
-        <div class="form-floating">
-          <input type="title" name="title" class="form-control fields_padding" id="floatingInput">
-          <label for="floatingInput">Title</label>
+        <div>
+            <label>Title</label>
+            <input type="title" name="title" class="form-control fields_padding" id="floatingInput">
         </div>
-        <div class="form-floating">
-          <textarea class="textarea" name="text" id="Text"></textarea>
-          <label for="Text">Text</label>
+
+        <div>
+            <label>Text</label>
+            <textarea class="textarea" name="text" id="Text"></textarea>
         </div>
 
         <button class="btn btn-lg btn-primary" type="submit">Post blog!</button>
-      </form>
+    </form>
 </div>
 {% endblock %}
