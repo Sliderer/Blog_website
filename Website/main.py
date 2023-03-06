@@ -1,7 +1,8 @@
-from flask import Flask, Blueprint, redirect, url_for, render_template, request, flash
+from flask import Flask, Blueprint, redirect, url_for, render_template, request, flash, session
 from flask_login import login_required, LoginManager, login_user
 from secret_key_generator import SecretKeyGenerator
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 
 from log_out import log_out
 from log_in import log_in
@@ -25,6 +26,9 @@ def load_user(user_id):
 
 @app.route('/')
 def log_out_user():
+    if 'used_id' in session:
+        load_user(session['used_id'])
+        return redirect('/login')
     return redirect('/logout')
 
 
@@ -56,6 +60,8 @@ def register():
 
         if user:
             login_user(user)
+            session.permanent = True
+            session['used_id'] = user.id
             return redirect('/login')
         else:
             return redirect(url_for('register'))
@@ -63,6 +69,7 @@ def register():
 
 @app.route('/enter', methods=['GET', 'POST'])
 def enter():
+
     if request.method == 'GET':
         return render_template('enter.html', links=['/logout', '/enter', '/enter'])
     else:
@@ -76,6 +83,8 @@ def enter():
 
         if check_password_hash(user.password, password):
             login_user(user)
+            session.permanent = True
+            session['used_id'] = user.id
             return redirect('/login')
         else:
             flash('Wrong password')
