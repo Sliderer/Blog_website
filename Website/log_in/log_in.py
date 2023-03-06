@@ -47,3 +47,10 @@ def user_blogs():
 @login_required
 def account():
     return render_template('account.html', current_user=current_user)
+
+
+@log_in.route('/blogs/<int:blog_id>')
+@login_required
+def blog(blog_id):
+    blog = database.find_blog_by_id(blog_id)
+    return render_template('blog.html', blog=blog)

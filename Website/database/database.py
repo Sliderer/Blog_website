@@ -51,4 +51,10 @@ class Database:
         command = f"INSERT INTO blogs VALUES (NULL, {used_id}, '{blog.title}', '{blog.text}')"
         self.__execute_command(command)
 
+    def find_blog_by_id(self, blog_id: int) -> Blog:
+        command = f"SELECT * FROM blogs WHERE id={blog_id}"
+        result = self.__execute_command(command)
+        blog = Blog().init_from_tuple(result[0])
+        return blog
+
 
